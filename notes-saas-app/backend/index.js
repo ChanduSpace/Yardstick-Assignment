@@ -24,14 +24,11 @@ app.get("/health", (req, res) => {
 });
 
 // Initialize data
-// In your backend/index.js, replace the initializeData function with:
-
 const initializeData = async () => {
   const Tenant = require("./models/Tenant");
   const User = require("./models/User");
   const bcrypt = require("bcryptjs");
 
-  // Create tenants
   const acme = await Tenant.findOneAndUpdate(
     { slug: "acme" },
     { name: "Acme Inc", slug: "acme", plan: "free" },
@@ -44,10 +41,8 @@ const initializeData = async () => {
     { upsert: true, new: true }
   );
 
-  // Create PROPER password hashes
   const hashedPassword = await bcrypt.hash("password", 12);
 
-  // Create users with proper hashed passwords
   const users = [
     {
       email: "admin@acme.test",
@@ -84,16 +79,14 @@ const initializeData = async () => {
   console.log("Database initialized with proper password hashes");
 };
 
-// Connect to MongoDB and start server
+// ✅ Connect to MongoDB when function runs
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/notes_saas")
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("MongoDB connected");
     initializeData();
-
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.error(err));
 
+// ✅ Export app for Vercel (NO app.listen here)
 module.exports = app;
