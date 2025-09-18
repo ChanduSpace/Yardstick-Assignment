@@ -12,7 +12,6 @@ const createTestUser = async () => {
     );
     console.log("Connected to MongoDB");
 
-    // Find or create Acme tenant
     let acme = await Tenant.findOne({ slug: "acme" });
     if (!acme) {
       acme = await Tenant.create({
@@ -22,7 +21,6 @@ const createTestUser = async () => {
       });
     }
 
-    // Create a test user with known password
     const testPassword = "password";
     const hashedPassword = await bcrypt.hash(testPassword, 12);
 

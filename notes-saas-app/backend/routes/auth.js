@@ -4,14 +4,12 @@ const User = require("../models/User");
 const Tenant = require("../models/Tenant");
 const router = express.Router();
 
-// Login
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
     console.log("Login attempt for:", email);
 
-    // Validate input
     if (!email || !password) {
       return res
         .status(400)
@@ -26,16 +24,13 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Debug: Check what's being compared
     console.log("Stored password hash:", user.password);
     console.log("Input password:", password);
 
-    // Test bcrypt directly
     const bcrypt = require("bcryptjs");
     const directCompare = await bcrypt.compare(password, user.password);
     console.log("Direct bcrypt compare result:", directCompare);
 
-    // Use the correctPassword method
     const isPasswordValid = await user.correctPassword(password);
     console.log("Method compare result:", isPasswordValid);
 

@@ -11,11 +11,9 @@ const fixAllPasswords = async () => {
     );
     console.log("Connected to MongoDB");
 
-    // Get all users
     const users = await User.find();
     console.log("Found", users.length, "users");
 
-    // Update each user's password with a proper hash
     for (const user of users) {
       const newHash = await bcrypt.hash("password", 12);
       user.password = newHash;
@@ -27,7 +25,6 @@ const fixAllPasswords = async () => {
 
     console.log("All passwords updated with proper hashes");
 
-    // Verify the fixes
     console.log("\n=== VERIFICATION ===");
     for (const user of users) {
       const isValid = await bcrypt.compare("password", user.password);

@@ -13,13 +13,11 @@ const completeReset = async () => {
     );
     console.log("Connected to MongoDB");
 
-    // Clear ALL data
     await User.deleteMany({});
     await Tenant.deleteMany({});
     await Note.deleteMany({});
     console.log("Cleared all data");
 
-    // Create tenants
     const acme = await Tenant.create({
       name: "Acme Inc",
       slug: "acme",
@@ -34,11 +32,9 @@ const completeReset = async () => {
 
     console.log("Tenants created");
 
-    // Create proper password hashes
     const hashedPassword = await bcrypt.hash("password", 12);
     console.log("Password hash created:", hashedPassword);
 
-    // Create users with proper hashes
     const users = [
       {
         email: "admin@acme.test",
@@ -69,7 +65,6 @@ const completeReset = async () => {
     await User.insertMany(users);
     console.log("Users created with proper password hashes");
 
-    // Verify everything works
     console.log("\n=== VERIFICATION ===");
     const testUser = await User.findOne({ email: "admin@acme.test" });
     const isValid = await bcrypt.compare("password", testUser.password);

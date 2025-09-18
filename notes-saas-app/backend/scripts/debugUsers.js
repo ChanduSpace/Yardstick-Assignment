@@ -11,7 +11,6 @@ const debugUsers = async () => {
     );
     console.log("Connected to MongoDB");
 
-    // Get all users with their tenant info
     const users = await User.find().populate("tenantId");
 
     console.log("\n=== USERS IN DATABASE ===");

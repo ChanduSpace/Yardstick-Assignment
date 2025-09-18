@@ -3,10 +3,8 @@ const { auth } = require("../middleware/auth");
 const Note = require("../models/Note");
 const Tenant = require("../models/Tenant");
 
-// Create router
 const router = express.Router();
 
-// Get all notes for current tenant
 router.get("/", auth, async (req, res) => {
   try {
     const notes = await Note.find({ tenantId: req.user.tenantId });
@@ -16,7 +14,6 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// Get single note
 router.get("/:id", auth, async (req, res) => {
   try {
     const note = await Note.findOne({
@@ -34,7 +31,6 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// Create note
 router.post("/", auth, async (req, res) => {
   try {
     const tenant = await Tenant.findById(req.user.tenantId);
@@ -65,7 +61,6 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// Update note
 router.put("/:id", auth, async (req, res) => {
   try {
     const note = await Note.findOneAndUpdate(
@@ -84,7 +79,6 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-// Delete note
 router.delete("/:id", auth, async (req, res) => {
   try {
     const note = await Note.findOneAndDelete({

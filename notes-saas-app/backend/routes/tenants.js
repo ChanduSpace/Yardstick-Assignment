@@ -3,7 +3,6 @@ const { auth } = require("../middleware/auth");
 const Tenant = require("../models/Tenant");
 const router = express.Router();
 
-// Upgrade tenant to pro
 router.post("/:slug/upgrade", auth, async (req, res) => {
   try {
     if (req.user.role !== "admin") {

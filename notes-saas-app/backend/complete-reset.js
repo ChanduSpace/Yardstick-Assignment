@@ -71,7 +71,6 @@ const completeReset = async () => {
     await User.insertMany(users);
     console.log("Users created with proper password hashes");
 
-    // Verify everything works
     console.log("\n=== VERIFICATION ===");
     const testUser = await User.findOne({ email: "admin@acme.test" });
     console.log("Stored hash:", testUser.password);

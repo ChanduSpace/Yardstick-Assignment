@@ -9,7 +9,6 @@ const createProperHash = async () => {
     console.log("Proper hash:", hashedPassword);
     console.log("Hash length:", hashedPassword.length);
 
-    // Test the new hash
     const testResult = await bcrypt.compare(password, hashedPassword);
     console.log("Test comparison result:", testResult);
   } catch (error) {
